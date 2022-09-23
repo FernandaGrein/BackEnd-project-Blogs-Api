@@ -1,5 +1,5 @@
 const validatesUserExistence = (password, userByEmail) => {
-  if (userByEmail.length === 0) {
+  if (!userByEmail.email) {
     return { type: 400, message: 'Invalid fields' };
   }
   if (userByEmail.password !== password) {
