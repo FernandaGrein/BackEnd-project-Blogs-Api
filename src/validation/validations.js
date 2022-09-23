@@ -1,20 +1,12 @@
-const schemas = require('./schemas');
-
-const validateLoginSchema = (email, password) => {
-  const validate = schemas.loginSchema.validate({ email, password });
-
-  if (validate.error) {
-    return { type: 400, message: 'Some required fields are missing' };
+const validatesUserExistence = (password, userByEmail) => {
+  if (userByEmail.length === 0) {
+    return { type: 400, message: 'Invalid fields' };
   }
-  return null;
+  if (userByEmail.password !== password) {
+    return { type: 400, message: 'Invalid fields' };
+  }
 };
 
-const validatesUserExistence = (email, password, userByEmail) => {
-  if (userByEmail.leng                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  )
-
-};
-
-module.exports = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-  validateLoginSchema,
+module.exports = { 
   validatesUserExistence,
 };
