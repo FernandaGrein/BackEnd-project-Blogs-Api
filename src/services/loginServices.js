@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const { validatesUserExistence } = require('../utils/validations');
-const generateToken = require('../utils/JWT');
+const { generateToken } = require('../utils/JWT');
 
 const getAllUser = () => User.findAll({});
 
@@ -14,7 +14,7 @@ const validadeLogin = async (body) => {
   const existenceValidate = validatesUserExistence(body.password, userByEmail);
   if (existenceValidate) return existenceValidate;
 
-  const token = generateToken(body);
+  const token = generateToken(body.email);
   return { type: null, message: token };
 };
 
