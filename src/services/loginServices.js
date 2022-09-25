@@ -21,4 +21,5 @@ const validadeLogin = async (body) => {
 module.exports = {
   getAllUser,
   validadeLogin,
+  findUserByemail,
 };

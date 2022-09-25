@@ -1,7 +1,14 @@
 const { User } = require('../models');
 const { generateToken } = require('../utils/JWT'); 
 
+const findUserByemail = (email) => User.findOne({
+    where: { email },
+});
+
 const createUser = async ({ displayName, email, password, image }) => {
+  const searchEmail = await findUserByemail(email);
+  if (searchEmail) return { type: 409, message: 'User already registered' };
+
   try {
     await User.create({ displayName, email, password, image });
     const token = generateToken(email);
