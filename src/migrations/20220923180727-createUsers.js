@@ -15,7 +15,7 @@ module.exports = {
         unique: true,
       },
       password: Sequelize.STRING,
-      image: Sequelize.STRING,
+      image: {type: Sequelize.STRING, allowNull: true}
     });
 
     return UserTable

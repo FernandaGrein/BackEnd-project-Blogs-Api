@@ -16,8 +16,6 @@ const validateUserSchema = (req, res, next) => {
   const { displayName, email, password } = req.body;
 
   const validation = schemas.userSchema.validate({ displayName, email, password });
-
-  console.log('VALIDAÇÃO ', validation.error.details[0].message);
   
   if (validation.error) {
     return res.status(400).json({ message: validation.error.details[0].message });
