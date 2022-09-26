@@ -20,8 +20,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelet: 'CASCADE',
       },
-      published: Sequelize.DATE,
-      updated: Sequelize.DATE,  
+      published: { type: Sequelize.DATE, allowNull: false},
+      updated: { type: Sequelize.DATE, allowNull: false}, 
     });
     return blogPostTable;
   },
