@@ -10,8 +10,8 @@ const tokenValidation = async (req, res, next) => {
   }
   
   try {
-    const validateToken = await jwt.verify(token, TOKEN_SECRET);
-    console.log(validateToken);
+    const payload = await jwt.verify(token, TOKEN_SECRET);
+    req.user = payload;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });
