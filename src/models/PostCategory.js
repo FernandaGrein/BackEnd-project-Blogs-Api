@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const postCategorySchema = sequelize.define('PostCategory', {
-    postId: { type: DataTypes.INTEGER, foreignKey: true },
-    categoryId: { type: DataTypes.INTEGER, foreignKey: true },
+    postId: { type: DataTypes.INTEGER, foreignKey: true, primaryKey: true, },
+    categoryId: { type: DataTypes.INTEGER, foreignKey: true, primaryKey: true, },
   }, 
   {
     timestamps: false,

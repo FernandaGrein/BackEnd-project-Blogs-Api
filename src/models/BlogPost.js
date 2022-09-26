@@ -1,5 +1,3 @@
-const { date } = require("joi")
-
 module.exports = (sequelize, DataTypes) => {
   const blogPostSchema = sequelize.define('BlogPost', {
     id: {
@@ -8,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     userId: { type: DataTypes.INTEGER, foreignKey: true },
-    published: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal('CURRENT_TIMESTAMP') },
-    updated: { type: DataTypes.DATE, allowNull: false, defaultValue: sequelize.literal('CURRENT_TIMESTAMP') }
+    published: { type: DataTypes.DATE, allowNull: false },
+    updated: { type: DataTypes.DATE, allowNull: false }
   }, 
   { 
     createdAt: 'published',

@@ -4,7 +4,7 @@ const loginUser = async (req, res) => {
   const loginBody = req.body;
 
   const logon = await loginService.validadeLogin(loginBody); 
-  console.log(logon, 'CONTROLLER'); 
+
   if (logon.type) {
     return res.status(logon.type).json({ message: logon.message });
   }
