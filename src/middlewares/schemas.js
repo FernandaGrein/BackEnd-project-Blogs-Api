@@ -27,8 +27,21 @@ const categorySchema = Joi.object({
   }),
 });
 
+const blogPostSchema = Joi.object({
+  title: Joi.string().required().messages({
+    'any.required': 'Some required fields are missing',
+  }),
+  content: Joi.string().required().messages({
+    'any.required': 'Some required fields are missing',
+  }),
+  categoryIds: Joi.array().items(Joi.number()).required().messages({
+    'any.required': 'Some required fields are missing',
+  }),
+});
+
 module.exports = {
   loginSchema, 
   userSchema,
   categorySchema,
+  blogPostSchema,
 };

@@ -33,8 +33,19 @@ const validateCategorySchema = (req, res, next) => {
   next();
 };
 
+const validateBlogPostSchema = (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+
+  const validate = schemas.blogPostSchema.validate({ title, content, categoryIds });
+  if (validate.error) {
+    return res.status(400).json({ message: validate.error.details[0].message });
+  }
+  next();
+};
+
 module.exports = { 
   validateLoginSchema,
   validateUserSchema,
   validateCategorySchema,
+  validateBlogPostSchema,
 };
