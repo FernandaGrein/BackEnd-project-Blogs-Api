@@ -10,7 +10,7 @@ module.exports = {
           Key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelet: 'CASCADE',
+        onDelete: 'CASCADE',
         primaryKey: true,
       },
       category_id: {
@@ -20,7 +20,7 @@ module.exports = {
           Key: 'id', 
         },
         onUpdate: 'CASCADE',
-        onDelet: 'CASCADE',
+        onDelete: 'CASCADE',
         primaryKey: true,
       }
     });

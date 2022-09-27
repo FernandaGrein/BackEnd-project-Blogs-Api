@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, sequelize } = require('../models');
 const { generateToken } = require('../utils/JWT'); 
 
 const findUserByemail = (email) => User.findOne({
@@ -44,8 +44,23 @@ const getUserById = async (id) => {
   }
 };
 
+const deleteUser = async (userEmail) => {
+  const user = await findUserByemail(userEmail);
+  const { id } = user.dataValues;
+
+  const result = await sequelize.transaction(async (t) => {
+    const deleteResult = await User.destroy({ where: { id } }, 
+      { transaction: t }); 
+
+    if (deleteResult > 0) return { type: null };
+    return { type: 404, message: 'Post does not exist' };
+  });
+  return result;
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  deleteUser,
 };
