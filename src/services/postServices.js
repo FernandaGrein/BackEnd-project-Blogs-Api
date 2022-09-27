@@ -49,8 +49,25 @@ const getAllPosts = async () => BlogPost.findAll({
   ],
 });
 
+const getPostBydId = async (id) => BlogPost.findOne({
+  where: { id },
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },  
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    },
+  ],
+});
+
 module.exports = {
   createPost,
   findUserByemail,
   getAllPosts,
+  getPostBydId,
 };
