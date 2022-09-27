@@ -36,8 +36,22 @@ const getPostById = async (req, res) => {
   return res.status(200).json(post);
 };
 
+const editPost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const userEmail = req.user;
+
+  const newPost = await postServices.editPost(title, content, userEmail, id);
+
+  if (newPost.type) {
+    return res.status(newPost.type).json({ message: newPost.message });
+  }
+  return res.status(200).json(newPost.message);
+};
+
 module.exports = {
   createPost,
   getAllposts,
   getPostById,
+  editPost,
 };

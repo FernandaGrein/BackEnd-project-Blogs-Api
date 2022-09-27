@@ -65,16 +65,27 @@ const getPostBydId = async (id) => BlogPost.findOne({
   ],
 });
 
-const editPost = async (title, content, userEmail, postId) => {
+const editPost = async (title, content, userEmail, id) => {
   const user = await findUserByemail(userEmail);
   const userId = user.dataValues.id;
 
-  const originalPost = await getPostBydId(postId);
+  const originalPost = await getPostBydId(id);
   const postUserId = originalPost.user.id;
   if (originalPost === null) return { type: 404, message: 'Post does not exist' };
   if (userId !== postUserId) return { type: 401, message: 'Unauthorized user' };
 
-  // fazer um update
+  const result = await sequelize.transaction(async (t) => {
+    const [updatePost] = await BlogPost.update({
+      title, content },
+      { where: { id } }, 
+      { transaction: t });
+    return updatePost;
+  });
+  if (result > 0) {
+    const newPost = await getPostBydId(id);
+    return { type: null, message: newPost };
+  }
+  return { type: 404, message: 'Post does not exist' };
 };
 
 module.exports = {

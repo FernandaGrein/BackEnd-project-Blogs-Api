@@ -43,9 +43,19 @@ const validateBlogPostSchema = (req, res, next) => {
   next();
 };
 
+const validateUpdateSchema = (req, res, next) => {
+  const { title, content } = req.body;
+  const validate = schemas.updatePostSchema.validate({ title, content });
+  if (validate.error) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+  next();
+};
+
 module.exports = { 
   validateLoginSchema,
   validateUserSchema,
   validateCategorySchema,
   validateBlogPostSchema,
+  validateUpdateSchema,
 };
