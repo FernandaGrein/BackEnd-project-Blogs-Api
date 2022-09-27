@@ -38,7 +38,7 @@ const validateBlogPostSchema = (req, res, next) => {
 
   const validate = schemas.blogPostSchema.validate({ title, content, categoryIds });
   if (validate.error) {
-    return res.status(400).json({ message: validate.error.details[0].message });
+    return res.status(400).json({ message: 'Some required fields are missing' });
   }
   next();
 };
