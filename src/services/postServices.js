@@ -65,9 +65,22 @@ const getPostBydId = async (id) => BlogPost.findOne({
   ],
 });
 
+const editPost = async (title, content, userEmail, postId) => {
+  const user = await findUserByemail(userEmail);
+  const userId = user.dataValues.id;
+
+  const originalPost = await getPostBydId(postId);
+  const postUserId = originalPost.user.id;
+  if (originalPost === null) return { type: 404, message: 'Post does not exist' };
+  if (userId !== postUserId) return { type: 401, message: 'Unauthorized user' };
+
+  // fazer um update
+};
+
 module.exports = {
   createPost,
   findUserByemail,
   getAllPosts,
   getPostBydId,
+  editPost,
 };
