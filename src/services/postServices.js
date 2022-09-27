@@ -70,8 +70,8 @@ const editPost = async (title, content, userEmail, id) => {
   const userId = user.dataValues.id;
 
   const originalPost = await getPostBydId(id);
-  const postUserId = originalPost.user.id;
   if (originalPost === null) return { type: 404, message: 'Post does not exist' };
+  const postUserId = originalPost.user.id;
   if (userId !== postUserId) return { type: 401, message: 'Unauthorized user' };
 
   const result = await sequelize.transaction(async (t) => {
@@ -88,10 +88,33 @@ const editPost = async (title, content, userEmail, id) => {
   return { type: 404, message: 'Post does not exist' };
 };
 
+const deletePost = async (id, userEmail) => {
+  const user = await findUserByemail(userEmail);
+  const userId = user.dataValues.id;
+
+  const originalPost = await getPostBydId(id);
+  if (originalPost === null) return { type: 404, message: 'Post does not exist' };
+  const postUserId = originalPost.user.id;
+  if (userId !== postUserId) return { type: 401, message: 'Unauthorized user' };
+
+  const result = await sequelize.transaction(async (t) => {
+    await PostCategory.destroy({ where: { postId: id } },
+      { transaction: t });
+    
+    const BlogPostDelet = await BlogPost.destroy({ where: { id } }, 
+      { transaction: t }); 
+
+    if (BlogPostDelet > 0) return { type: null };
+    return { type: 404, message: 'Post does not exist' };
+  });
+  return result;
+};
+
 module.exports = {
   createPost,
   findUserByemail,
   getAllPosts,
   getPostBydId,
   editPost,
+  deletePost,
 };
