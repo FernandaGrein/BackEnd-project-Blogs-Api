@@ -13,7 +13,6 @@ const validateCategoriesIds = async (allIds, bodyIds) => {
     if (findId === undefined) return { type: 400, message: '"categoryIds" not found' };
     return null; 
   });
-  console.log('dentro do validate id');
   return result;
 };
 

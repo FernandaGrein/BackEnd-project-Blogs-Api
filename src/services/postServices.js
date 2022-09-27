@@ -10,14 +10,14 @@ const getCategories = () => Category.findAll({
     attributes: { exclude: 'name' },
 });
 
-const createPost = async (userEmail, title, content, categoryIds) => { 
+const createPost = async (userEmail, title, content, categoryIds) => {
   const allCategories = await getCategories();
   const idsFromDb = allCategories.map((item) => item.dataValues.id);
-
+  
   const checkIds = await validateCategoriesIds(idsFromDb, categoryIds);
-  const invalidation = checkIds.find((item) => item !== null);
-  if (invalidation) return invalidation;
-
+  const validation = checkIds.find((item) => item !== null);
+  if (validation) return validation;
+   
   const result = await sequelize.transaction(async (t) => {
     const user = await findUserByemail(userEmail);
     const userId = user.dataValues.id;
@@ -34,7 +34,23 @@ const createPost = async (userEmail, title, content, categoryIds) => {
   return result;
 };
 
+const getAllPosts = async () => BlogPost.findAll({
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },  
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    },
+  ],
+});
+
 module.exports = {
   createPost,
   findUserByemail,
+  getAllPosts,
 };

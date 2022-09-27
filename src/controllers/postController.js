@@ -8,7 +8,7 @@ const createPost = async (req, res) => {
   const newPost = await postServices.createPost(userEmail, title, content, categoryIds);
 
   if (newPost.type) {
-    res.status(newPost.type).json(newPost.message);
+    return res.status(newPost.type).json({ message: newPost.message });
   }
 
   return res.status(201).json({
@@ -21,6 +21,12 @@ const createPost = async (req, res) => {
   });
 };
 
+const getAllposts = async (req, res) => {
+  const allPosts = await postServices.getAllPosts();
+  return res.status(200).json(allPosts);
+};
+
 module.exports = {
   createPost,
+  getAllposts,
 };
